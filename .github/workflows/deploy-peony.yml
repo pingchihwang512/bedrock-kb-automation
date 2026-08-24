@@ -25,7 +25,7 @@ jobs:
         run: pip install boto3 pyyaml
 
       - name: Configure AWS Credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v3
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           # 未來若 ai-chatbot 在不同 AWS 帳號，這裡的變數可改為別的 例如PEONY_AWS_ROLE_ARN
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
