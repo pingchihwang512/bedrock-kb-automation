@@ -1,0 +1,37 @@
+name: Deploy to Bedrock KB
+on:
+  push:
+    branches: [main]
+    paths: ["tours/*.md"]
+
+permissions:
+  id-token: write # 這是 OIDC 驗證的關鍵設定
+  contents: read # 允許讀取程式碼
+
+jobs:
+  sync-and-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: pip install boto3 pyyaml
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Process and Sync
+        env:
+          S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
+          KNOWLEDGE_BASE_ID: ${{ vars.KNOWLEDGE_BASE_ID }}
+          DATA_SOURCE_ID: ${{ vars.DATA_SOURCE_ID }}
+        run: python scripts/sync_to_bedrock.py
