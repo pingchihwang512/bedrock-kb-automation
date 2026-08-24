@@ -177,7 +177,7 @@ The itinerary listed is for reference only. The final itinerary will be advised 
 
 **[English]**
 
-- Due to the recent earthquake in Taiwan, the access to Taroko Gorge is severely impacted due to road surface defects caused by the earthquake. Repairing these defects may require several months of effort.
+- Because the recent earthquake in Taiwan, the access to Taroko Gorge is severely impacted due to road surface defects caused by the earthquake. Repairing these defects may require several months of effort.
   The itinerary listed is for reference only. The final itinerary will be advised individually.
 - Roundtrip TPE Airport transfers and all sightseeing are based on seat‐in‐coach basis. Professional service of tour guide is included.
 - Meet tour guide for round‐island tour at hotel lobby on Monday
