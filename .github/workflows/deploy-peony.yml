@@ -30,7 +30,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
           audience: sts.amazonaws.com  # 補上這行，確保 AWS STS 成功驗證 OIDC
-
+          role-skip-session-tagging: true    # 加這行 經典的坑，官方文件也有特別提到 要呼叫 sts:TagSession 這個 API
+          
       - name: Process and Sync
         env:
           S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
