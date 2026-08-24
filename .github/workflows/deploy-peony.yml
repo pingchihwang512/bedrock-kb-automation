@@ -1,9 +1,9 @@
-name: Deploy Peony Tours to Bedrock KB  # 1. 換上專屬名稱
+name: Deploy Peony Tours to Bedrock KB
 
 on:
   push:
     branches: [main]
-    paths: ["peony-tours/*.md"]  # 2. 改為只監聽 peony-tours 資料夾
+    paths: ["peony-tours/*.md"]
 
 permissions:
   id-token: write 
@@ -27,14 +27,14 @@ jobs:
       - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          # 未來若 ai-chatbot 在不同 AWS 帳號，這裡的變數可改為別的 例如PEONY_AWS_ROLE_ARN
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
+          audience: sts.amazonaws.com  # 補上這行，確保 AWS STS 成功驗證 OIDC
 
       - name: Process and Sync
         env:
           S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
           KNOWLEDGE_BASE_ID: ${{ secrets.KNOWLEDGE_BASE_ID }}
           DATA_SOURCE_ID: ${{ secrets.DATA_SOURCE_ID }}
-          TARGET_FOLDER: "peony-tours"  # 3. 告訴 Python 腳本這次要處理哪個資料夾
+          TARGET_FOLDER: "peony-tours"
         run: python scripts/sync_to_bedrock.py
