@@ -3,12 +3,15 @@ import os, glob, yaml, json, boto3
 BUCKET_NAME = os.environ['S3_BUCKET_NAME']
 KB_ID = os.environ['KNOWLEDGE_BASE_ID']
 DS_ID = os.environ['DATA_SOURCE_ID']
+# 新增這行：從 YAML 接手資料夾名稱
+TARGET_FOLDER = os.environ.get('TARGET_FOLDER', 'peony-tours') 
 
 s3 = boto3.client('s3')
 bedrock_agent = boto3.client('bedrock-agent')
 
 def process_and_upload():
-    md_files = glob.glob('tours/*.md')
+    # 改為動態路徑
+    md_files = glob.glob(f'{TARGET_FOLDER}/*.md')
     for filepath in md_files:
         filename = os.path.basename(filepath)
         with open(filepath, 'r', encoding='utf-8') as f:
