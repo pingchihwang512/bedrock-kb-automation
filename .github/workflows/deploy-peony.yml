@@ -34,8 +34,8 @@ jobs:
           
       - name: Process and Sync
         env:
-          S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
-          KNOWLEDGE_BASE_ID: ${{ secrets.KNOWLEDGE_BASE_ID }}
-          DATA_SOURCE_ID: ${{ secrets.DATA_SOURCE_ID }}
+          S3_BUCKET_NAME: ${{ vars.PEONY_S3_BUCKET_NAME }}
+          KNOWLEDGE_BASE_ID: ${{ secrets.PEONY_KNOWLEDGE_BASE_ID }}
+          DATA_SOURCE_ID: ${{ secrets.PEONY_DATA_SOURCE_ID }}
           TARGET_FOLDER: "peony-tours"
         run: python scripts/sync_to_bedrock.py
