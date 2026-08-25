@@ -6,7 +6,7 @@ title_zh: "台灣環島之旅 2027年4月-2028"
 package_code: "PTWSUN"
 package_id: 954
 duration: "8 Days 7 Nights"
-price_from: "$1250"
+price_from: "$1252"
 url_en: "https://www.peonytours.com/en/Vacation-Package/Taiwan-Round-Island-SUN-April-2027-2028"
 url_zh: "https://www.peonytours.com/zh/Vacation-Package/Taiwan-Round-Island-SUN-April-2027-2028"
 ---
