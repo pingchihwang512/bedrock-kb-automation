@@ -51,12 +51,22 @@ def process_and_upload():
             print(f"⚠️ 上傳成功 (純 Markdown 無 Metadata): {s3_key}")
             uploaded_count += 1
 
-    # 有成功上傳檔案才觸發知識庫同步
-    if uploaded_count > 0:
-        response = bedrock_agent.start_ingestion_job(knowledgeBaseId=KB_ID, dataSourceId=DS_ID)
-        print(f"🚀 同步已啟動！任務 ID: {response['ingestionJob']['ingestionJobId']}")
-    else:
-        print("ℹ️ 沒有發現需要同步的檔案。")
+        # 有成功上傳檔案才觸發知識庫同步
+            if uploaded_count > 0:
+                try:
+                    response = bedrock_agent.start_ingestion_job(
+                        knowledgeBaseId=KB_ID, 
+                        dataSourceId=DS_ID
+                    )
+                    print(f"🚀 同步已啟動！任務 ID: {response['ingestionJob']['ingestionJobId']}")
+                except bedrock_agent.exceptions.ConflictException:
+                    print("⚠️ Bedrock 目前已有同步任務正在執行中 (IN_PROGRESS)。")
+                    print("✅ 檔案已成功更新至 S3，Bedrock 將會一併吸收最新資料，忽略此衝突。")
+                except Exception as e:
+                    print(f"❌ 觸發同步時發生未知錯誤: {str(e)}")
+                    raise e
+            else:
+                print("ℹ️ 沒有發現需要同步的檔案。")
 
 if __name__ == "__main__":
     process_and_upload()
