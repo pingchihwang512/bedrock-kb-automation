@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths: ["peony-tours/*.md"]
 
+# 💡 加入排隊機制：確保此 Workflow 一次只有一個任務在執行
+concurrency:
+  group: sync-peony-tour
+  cancel-in-progress: false  # 讓後面的 push 排隊等待前一個完成，不中斷
+
 permissions:
   id-token: write 
   contents: read 
